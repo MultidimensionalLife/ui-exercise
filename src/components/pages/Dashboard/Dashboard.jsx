@@ -2,7 +2,10 @@
 
 import React from "react";
 
+import styled from "styled-components";
+
 import Navbar from "../../organisms/Navbar";
+import Table from "../../atoms/Table/Table";
 
 const DATA = [
   {
@@ -13,36 +16,21 @@ const DATA = [
     status: "registered",
     createdOn: "date",
   },
+  {
+    userId: "admin2",
+    firstname: "Admin2",
+    lastname: "User2",
+    email: "support2@cixsoft.com",
+    status: "registered2",
+    createdOn: "date2",
+  },
 ];
 
 function Dashboard(): React$Node {
   return (
     <>
       <Navbar />
-      <table border={1}>
-        <thead>
-          <tr>
-            <th>User ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Created On</th>
-          </tr>
-        </thead>
-        <tbody>
-          {DATA.map((row, index) => (
-            <tr key={`${row.userId}-${row.createdOn}`}>
-              <td>{row.userId}</td>
-              <td>{row.firstname}</td>
-              <td>{row.lastname}</td>
-              <td>{row.email}</td>
-              <td>{row.status}</td>
-              <td>{row.createdOn}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table data={DATA} />
     </>
   );
 }
