@@ -1,4 +1,5 @@
 // @flow
+import React from "react";
 
 import "./App.css";
 
@@ -11,12 +12,12 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
-import NavBar from "./components/organisms/Navbar/Navbar";
+import Dashboard from "./components/pages/Dashboard";
 
 library.add(faPlus, faEdit, faRefresh, faTrash);
 
 function App(): React$Node {
-  return <NavBar />;
+  return <Dashboard />;
 }
 
 export default App;

@@ -1,5 +1,7 @@
 // @flow
 
+import React from "react";
+
 import IconButton from "../../atoms/Buttons/IconButton/IconButton";
 import { Container, DividerVertical } from "./Styled";
 

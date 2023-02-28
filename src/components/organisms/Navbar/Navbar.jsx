@@ -1,5 +1,7 @@
 // @flow
 
+import React from "react";
+
 import AppBarActions from "../../molecules/AppBarActions";
 
 import Input from "../../atoms/Input";

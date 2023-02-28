@@ -8,10 +8,7 @@ import { ButtonContainer } from "./Styled";
 
 import type { IconButtonPropTypes } from "./types";
 
-function IconButton({
-  iconName,
-  ...others
-}: IconButtonPropTypes): React$Element<IconButtonPropTypes> {
+function IconButton({ iconName, ...others }: IconButtonPropTypes): React$Node {
   return (
     <ButtonContainer {...others}>
       <FontAwesomeIcon icon={iconName} />

@@ -1,5 +1,7 @@
 // @flow
 
+import React from "react";
+
 import { StyledInput } from "./Styled";
 
 type InputPropTypes = { inputProps?: any };
