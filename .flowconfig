@@ -1,4 +1,10 @@
 [ignore]
+; We don't need to run flow in these modules
+<PROJECT_ROOT>/node_modules/eslint-plugin-react/.*
+<PROJECT_ROOT>/node_modules/resolve/.*
+
+; We need to ignore the tests
+<PROJECT_ROOT>/__tests__/.*
 
 [include]
 
@@ -8,5 +14,4 @@
 
 [options]
 exact_by_default=false
-react.runtime=automatic
 [strict]
