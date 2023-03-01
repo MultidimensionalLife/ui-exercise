@@ -8,4 +8,7 @@ export const StyledInput = styled.input`
   outline: none;
   padding: 0.3em;
   color: white;
+  ::placeholder {
+    color: white;
+  }
 `;

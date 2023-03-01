@@ -1,31 +1,27 @@
-// @flow
+import { createSlice } from "@reduxjs/toolkit";
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-import type { UsersState } from "./types";
-
-export const createUser: any = createAsyncThunk(
-  "users/create",
-  async ({}) => {}
-);
-
-const initialState: UsersState = {
+const initialState = {
   data: [],
   fetching: false,
   hasError: false,
 };
 
-export const usersSlice: any = createSlice({
+const slice = {
   name: "users",
   initialState,
   reducers: {
-    create: (state, payload) => {
-      state.push(payload);
+    create: (state, action) => {
+      state.data.push({
+        ...action.payload,
+        id: Date.now().toString(),
+        createdOn: new Date().toDateString(),
+      });
     },
   },
-});
+};
 
-// Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = usersSlice.actions;
+export const usersSlice = createSlice(slice);
+
+export const { create } = usersSlice.actions;
 
 export default usersSlice.reducer;

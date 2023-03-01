@@ -4,7 +4,6 @@ export const StyledTableContainer = styled.div`
   background-color: #3a4752;
   padding: 0.5em;
   border-radius: 3px;
-  margin: 1em;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
 `;
@@ -27,5 +26,6 @@ export const StyledTable = styled.table`
     text-align: left;
     background-color: #5c6c83;
     color: #abb7c4;
+    text-transform: uppercase;
   }
 `;

@@ -11,10 +11,14 @@ function Table({ data }: { data: TableData }): React$Node {
   const [tableHeader, setTableHeader] = useState([]);
 
   useEffect(() => {
-    const firstRow = data[0];
+    if (data.length > 0) {
+      const firstRow = data[0];
 
-    setTableHeader(Object.keys(firstRow));
+      setTableHeader(Object.keys(firstRow));
+    }
   }, [data]);
+
+  if (data.length === 0) return <></>;
 
   return (
     <StyledTableContainer>
