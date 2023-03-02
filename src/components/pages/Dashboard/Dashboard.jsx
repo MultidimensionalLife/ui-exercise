@@ -102,6 +102,9 @@ function Dashboard(): React$Node {
   const handleOnFormSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     if (!isValidFields(userInfo)) {
       setError(true);
+      if (isInit) {
+        setInit(false);
+      }
     } else {
       dispatch(create(userInfo));
       setUserInfo(defaultValue);
@@ -113,8 +116,6 @@ function Dashboard(): React$Node {
   };
 
   useEffect(() => {
-    console.log(userInfo);
-    console.log(isValidFields(userInfo));
     setError(!isValidFields(userInfo));
   }, [userInfo]);
 
@@ -128,7 +129,7 @@ function Dashboard(): React$Node {
             <StyledErrorCard>
               <p>
                 There was a problem with your inputs. <br />
-                Please try again later. dsadasdasdas asd asd asd asd asd
+                Please try again later.
               </p>
             </StyledErrorCard>
           )}
@@ -169,7 +170,7 @@ function Dashboard(): React$Node {
           </Form>
         </FormContainer>
         <VerticalDivider />
-        <Table data={users.data} />
+        <Table data={users.data} refKey="id" />
       </Container>
     </>
   );
