@@ -1,14 +1,22 @@
 import styled from "styled-components";
 
-export const StyledInput = styled.input`
+export const StyledInputWrapper = styled.div`
   background-color: #57636d;
   border: 1px solid #76828c;
   border-radius: 3px;
-  width: 200px;
+  padding: 0.4em;
+  display: flex;
+`;
+
+export const StyledInput = styled.input`
+  background-color: #57636d;
+  border-width: 0;
+  padding: 0;
+  margin: 0;
   outline: none;
-  padding: 0.3em;
   color: white;
+  width: 100%;
   ::placeholder {
-    color: white;
+    color: #9ea7ae;
   }
 `;
