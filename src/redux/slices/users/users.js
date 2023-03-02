@@ -17,11 +17,28 @@ const slice = {
         createdOn: new Date().toDateString(),
       });
     },
+    update: (state, action) => {
+      const index = state.data.findIndex(
+        (user) => user.id === action.payload.id
+      );
+
+      console.log("Update", state);
+
+      state.data[index] = {
+        ...state.data[index],
+        ...action.payload.data,
+      };
+    },
+    remove: (state, action) => {
+      const ids = action.payload.ids;
+
+      state.data = state.data.filter((user) => !ids.includes(user.id));
+    },
   },
 };
 
 export const usersSlice = createSlice(slice);
 
-export const { create } = usersSlice.actions;
+export const { create, update, remove } = usersSlice.actions;
 
 export default usersSlice.reducer;

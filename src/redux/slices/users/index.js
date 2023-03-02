@@ -1,5 +1,5 @@
 // @flow
 
-import users, { create } from "./users";
+import users, { create, update, remove } from "./users";
 
-export { users as default, create };
+export { users as default, create, update, remove };

@@ -10,13 +10,17 @@ type TableData = Array<{ [string]: any }>;
 type TablePropTypes = {
   data: TableData,
   refKey: string,
-  onSelectAll: (status: boolean) => void,
+  onRowSelect?: (selectedCount: number) => void,
+  getSelectedRows?: (selectedRows: Array<string>) => void,
+  clearSelectedRows?: () => void,
 };
 
 function Table({
   data,
   refKey = "id",
-  onSelectAll,
+  onRowSelect = () => {},
+  getSelectedRows = () => {},
+  clearSelectedRows = () => {},
 }: TablePropTypes): React$Node {
   const dataCheckboxRef = useRef();
 
@@ -30,9 +34,9 @@ function Table({
     if (data.length > 0) {
       const firstRow = data[0];
 
-      setTableHeader(Object.keys(firstRow));
+      setTableHeader(Object.keys(firstRow).filter((key) => refKey !== key));
     }
-  }, [data]);
+  }, [data, refKey]);
 
   useEffect(() => {
     if (dataCheckboxRef.current) {
@@ -41,7 +45,8 @@ function Table({
   }, [isSelectAllEnabled]);
 
   const handOnCheckAll = (e: SyntheticInputEvent<HTMLInputElement>) => {
-    onSelectAll(!isSelectAllEnabled);
+    onRowSelect(!isSelectAllEnabled ? data.length : 0);
+
     setSelectAllEnable(!isSelectAllEnabled);
 
     setChecked(data.map((row) => row[refKey]));
@@ -60,7 +65,14 @@ function Table({
     }
   };
 
+  useEffect(() => {
+    onRowSelect(isChecked.length);
+    getSelectedRows(isChecked);
+  }, [isChecked, onRowSelect, getSelectedRows]);
+
   if (data.length === 0) return <></>;
+
+  console.log(data);
 
   return (
     <StyledTableContainer>

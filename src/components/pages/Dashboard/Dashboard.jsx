@@ -1,9 +1,11 @@
 // @flow
 
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+
+import { toast } from "react-toastify";
 
 import styled from "styled-components";
 
@@ -12,8 +14,7 @@ import Table from "../../atoms/Table/Table";
 import Input from "../../atoms/Input";
 import PrimaryButton from "../../atoms/Buttons/PrimaryButton/PrimaryButton";
 
-import { create } from "../../../redux/slices/users";
-import type { User } from "../../../redux/slices/users/types";
+import { create, update, remove } from "../../../redux/slices/users";
 
 type UserInfoFields = {
   firstname: string,
@@ -82,16 +83,15 @@ function Dashboard(): React$Node {
 
   const [userInfo, setUserInfo] = useState<UserInfoFields>(defaultValue);
 
-  const [hasError, setError] = useState<boolean>(false);
-  const [isInit, setInit] = useState<boolean>(true);
+  const [selectedUserCount, setCount] = useState<number>(0);
+
+  const [selectedRows, setSelectedRows] = useState<Array<string>>([]);
+
+  const [editMode, setEditMode] = useState<"new" | "update">("new");
 
   const handleInputChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
     const target = e.target;
     const name = target.name;
-
-    if (isInit) {
-      setInit(false);
-    }
 
     setUserInfo({
       ...userInfo,
@@ -101,38 +101,72 @@ function Dashboard(): React$Node {
 
   const handleOnFormSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     if (!isValidFields(userInfo)) {
-      setError(true);
-      if (isInit) {
-        setInit(false);
-      }
+      toast.warn("There was a problem with your inputs.  Please try again.");
     } else {
-      dispatch(create(userInfo));
+      if (editMode === "new") {
+        dispatch(create(userInfo));
+      } else {
+        const id = selectedRows[0];
+        dispatch(
+          update({
+            id: id,
+            data: userInfo,
+          })
+        );
+      }
+
       setUserInfo(defaultValue);
-      setInit(true);
-      setError(false);
     }
 
     e.preventDefault();
   };
 
-  useEffect(() => {
-    setError(!isValidFields(userInfo));
-  }, [userInfo]);
-
   return (
     <>
-      <Navbar />
+      <Navbar
+        onAdd={() => {
+          console.log(users);
+          if (editMode === "new") return;
+
+          setEditMode("new");
+        }}
+        onEdit={() => {
+          if (selectedUserCount > 1 || selectedUserCount === 0) {
+            toast.error("Please select at least one record.");
+            return;
+          }
+
+          const id = selectedRows[0];
+
+          const { firstname, lastname, email, status } = users.data.find(
+            (row) => row.id === id
+          );
+
+          setUserInfo({
+            firstname,
+            lastname,
+            email,
+            status,
+          });
+
+          setEditMode("update");
+        }}
+        onDelete={() => {
+          if (selectedRows.length === 0) {
+            toast.error("Please select at least one record to delete.");
+            return;
+          }
+          dispatch(
+            remove({
+              ids: selectedRows,
+            })
+          );
+        }}
+        onRefresh={() => {}}
+      />
       <Container>
         <FormContainer>
           <FormTitle>Create New</FormTitle>
-          {hasError && !isInit && (
-            <StyledErrorCard>
-              <p>
-                There was a problem with your inputs. <br />
-                Please try again later.
-              </p>
-            </StyledErrorCard>
-          )}
           <Form onSubmit={handleOnFormSubmit}>
             <Input
               type="text"
@@ -166,18 +200,15 @@ function Dashboard(): React$Node {
               onChange={handleInputChange}
             />
             <HorizontalDivider />
-            <PrimaryButton label="Save" />
+            <PrimaryButton label={editMode === "new" ? "Save" : "Update"} />
           </Form>
         </FormContainer>
         <VerticalDivider />
         <Table
           data={users.data}
           refKey="id"
-          onSelectAll={(status) => {
-            if (status) {
-              console.log("okies");
-            }
-          }}
+          onRowSelect={(count) => setCount(count)}
+          getSelectedRows={(rows) => setSelectedRows(rows)}
         />
       </Container>
     </>

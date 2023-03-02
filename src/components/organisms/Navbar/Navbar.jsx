@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import { useDispatch } from "react-redux";
-
 import AppBarActions from "../../molecules/AppBarActions";
 
 import Input from "../../atoms/Input";
@@ -11,21 +9,12 @@ import Input from "../../atoms/Input";
 import { Container } from "./Styled";
 import { DividerVertical } from "../../molecules/AppBarActions/Styled";
 
-import { create } from "../../../redux/slices/users";
+import type { AppBarActionsPropTypes } from "../../molecules/AppBarActions/types";
 
-import type { User } from "../../../redux/slices/users/types";
-
-function NavBar(): React$Node {
-  const dispatch = useDispatch();
-
+function NavBar({ ...actionProps }: AppBarActionsPropTypes): React$Node {
   return (
     <Container>
-      <AppBarActions
-        onAdd={() => {}}
-        onEdit={() => {}}
-        onRefresh={() => {}}
-        onDelete={() => {}}
-      />
+      <AppBarActions {...actionProps} />
       <DividerVertical />
       <Input placeholder="Search..." />
     </Container>
