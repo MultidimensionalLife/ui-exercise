@@ -13,6 +13,7 @@ type TablePropTypes = {
   onRowSelect?: (selectedCount: number) => void,
   getSelectedRows?: (selectedRows: Array<string>) => void,
   clearSelectedRows?: () => void,
+  searchTerm: string,
 };
 
 function Table({
@@ -21,6 +22,7 @@ function Table({
   onRowSelect = () => {},
   getSelectedRows = () => {},
   clearSelectedRows = () => {},
+  searchTerm,
 }: TablePropTypes): React$Node {
   const dataCheckboxRef = useRef();
 
@@ -71,8 +73,6 @@ function Table({
   }, [isChecked, onRowSelect, getSelectedRows]);
 
   if (data.length === 0) return <></>;
-
-  console.log(data);
 
   return (
     <StyledTableContainer>

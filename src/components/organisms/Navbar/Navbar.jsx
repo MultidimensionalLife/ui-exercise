@@ -11,12 +11,19 @@ import { DividerVertical } from "../../molecules/AppBarActions/Styled";
 
 import type { AppBarActionsPropTypes } from "../../molecules/AppBarActions/types";
 
-function NavBar({ ...actionProps }: AppBarActionsPropTypes): React$Node {
+type NavBarPropTypes = AppBarActionsPropTypes & {
+  onSearch?: (e: SyntheticInputEvent<HTMLInputElement>) => void,
+};
+
+function NavBar({
+  onSearch = () => {},
+  ...actionProps
+}: NavBarPropTypes): React$Node {
   return (
     <Container>
       <AppBarActions {...actionProps} />
       <DividerVertical />
-      <Input placeholder="Search..." />
+      <Input placeholder="Search..." onChange={onSearch} />
     </Container>
   );
 }

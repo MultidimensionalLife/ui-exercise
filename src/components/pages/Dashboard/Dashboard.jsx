@@ -89,6 +89,8 @@ function Dashboard(): React$Node {
 
   const [editMode, setEditMode] = useState<"new" | "update">("new");
 
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   const handleInputChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
     const target = e.target;
     const name = target.name;
@@ -125,7 +127,6 @@ function Dashboard(): React$Node {
     <>
       <Navbar
         onAdd={() => {
-          console.log(users);
           if (editMode === "new") return;
 
           setEditMode("new");
@@ -163,6 +164,9 @@ function Dashboard(): React$Node {
           );
         }}
         onRefresh={() => {}}
+        onSearch={(e) => {
+          setSearchTerm(e.target.value);
+        }}
       />
       <Container>
         <FormContainer>
@@ -209,6 +213,7 @@ function Dashboard(): React$Node {
           refKey="id"
           onRowSelect={(count) => setCount(count)}
           getSelectedRows={(rows) => setSelectedRows(rows)}
+          searchTerm={searchTerm}
         />
       </Container>
     </>
