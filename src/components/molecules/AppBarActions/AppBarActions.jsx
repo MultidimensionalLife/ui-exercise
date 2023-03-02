@@ -15,7 +15,7 @@ function AppBarActions({
 }: AppBarActionsPropTypes): React$Node {
   return (
     <Container>
-      <IconButton iconName="fa-plus" onClick={onAdd} />
+      <IconButton iconName="fa-plus" onClick={onAdd} disabled />
       <DividerVertical />
       <IconButton iconName="fa-edit" onClick={onEdit} />
       <DividerVertical />

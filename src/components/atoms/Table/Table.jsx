@@ -10,9 +10,14 @@ type TableData = Array<{ [string]: any }>;
 type TablePropTypes = {
   data: TableData,
   refKey: string,
+  onSelectAll: (status: boolean) => void,
 };
 
-function Table({ data, refKey = "id" }: TablePropTypes): React$Node {
+function Table({
+  data,
+  refKey = "id",
+  onSelectAll,
+}: TablePropTypes): React$Node {
   const dataCheckboxRef = useRef();
 
   const [tableHeader, setTableHeader] = useState([]);
@@ -36,6 +41,7 @@ function Table({ data, refKey = "id" }: TablePropTypes): React$Node {
   }, [isSelectAllEnabled]);
 
   const handOnCheckAll = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    onSelectAll(!isSelectAllEnabled);
     setSelectAllEnable(!isSelectAllEnabled);
 
     setChecked(data.map((row) => row[refKey]));

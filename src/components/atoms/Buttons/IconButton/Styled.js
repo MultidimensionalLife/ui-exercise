@@ -5,4 +5,14 @@ export const ButtonContainer = styled.button`
   border: 1px solid #ddd;
   cursor: pointer;
   border-radius: 3px;
+
+  :active {
+    position: relative;
+    top: 1px;
+  }
+
+  :disabled {
+    position: unset;
+    cursor: default;
+  }
 `;

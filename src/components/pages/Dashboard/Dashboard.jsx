@@ -170,7 +170,15 @@ function Dashboard(): React$Node {
           </Form>
         </FormContainer>
         <VerticalDivider />
-        <Table data={users.data} refKey="id" />
+        <Table
+          data={users.data}
+          refKey="id"
+          onSelectAll={(status) => {
+            if (status) {
+              console.log("okies");
+            }
+          }}
+        />
       </Container>
     </>
   );

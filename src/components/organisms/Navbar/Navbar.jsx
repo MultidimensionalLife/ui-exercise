@@ -15,22 +15,13 @@ import { create } from "../../../redux/slices/users";
 
 import type { User } from "../../../redux/slices/users/types";
 
-const data: User = {
-  id: Date.now().toString(),
-  firstname: "Chester",
-  lastname: "Danao",
-  email: "chesterpauldanao@gmail.com",
-  status: "Registered",
-  createdOn: new Date().toDateString(),
-};
-
 function NavBar(): React$Node {
   const dispatch = useDispatch();
 
   return (
     <Container>
       <AppBarActions
-        onAdd={() => dispatch(create(data))}
+        onAdd={() => {}}
         onEdit={() => {}}
         onRefresh={() => {}}
         onDelete={() => {}}
